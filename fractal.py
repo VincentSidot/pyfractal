@@ -5,7 +5,8 @@ from scipy import ndimage
 import random as rnd
 
 # nombre de racine
-p = 3
+p = 7
+epsilon = 1e-8
 #taille grille en pixel
 size = (4000,4000)
 #equivalent sur le plan complexe
@@ -45,10 +46,8 @@ def map(value,imin,imax,omin,omax):
     igap = imax - imin
     ogap = omax - omin
     return (value-imin)/igap*ogap + omin
-
-
+    
 color = [ (255,0,0),(0,255,0),(0,0,255),(255,0,127),(255,255,0),(255,128,0),(127,0,255),(0,255,255),(255,0,255),(0,128,255) ]
-#rnd.shuffle(color)
 
 # On genere une couleur par racine possible
 colordict = {}
@@ -67,7 +66,8 @@ image = np.zeros((size[0],size[1],4),dtype = np.uint8) # image
 for i in range(len(image)):
     for j in range(len(image[0])):
         u0 = imageToPlan(i,j)
-        z,n = newton(u0,f,df,1e-10,max_iter)
+        z,n = newton(u0,f,df,epsilon,max_iter)
+        #print(n)
         image[i,j] = colordict[roundc(z,6)]
         image[i,j,3] = int(map(n,0,max_count,0,255))
         
