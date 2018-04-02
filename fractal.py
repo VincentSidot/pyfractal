@@ -5,7 +5,7 @@ from scipy import ndimage
 import random as rnd
 
 # nombre de racine
-p = 7
+p = 2
 epsilon = 1e-8
 #taille grille en pixel
 size = (4000,4000)
